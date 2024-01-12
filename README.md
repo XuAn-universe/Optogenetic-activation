@@ -4,7 +4,7 @@ GUI for optogenetic motor mapping and activation: Mapping_Analysis.m
 
 GUI for EEG signal analysis: EEG_Analysis_All.m
 
-GUI for image analysis (image stacks take by MBF microscope): ImageViewer.m
+GUI for image analysis (image stacks taken by MBF microscope): ImageViewer.m
 
 GUI for eletrophysiological recording analysis: Neuralynx_Multichannel_Analysis.m
 
