@@ -111,12 +111,9 @@ try
     FFTX = fft(signal, NFFT0);                    % Take FFT, padding with zeros. length(FFTX)==NFFT
     NumUniquePts = ceil((NFFT0+1)/2);
     FFTX = FFTX(1:NumUniquePts);            % FFT is symmetric, throw away second half
-    MX = abs(FFTX);                         % Take magnitude of X, also equal to sqrt(FFTX.*conj(FFTX))
-    MX = MX*2;                              % Multiply by 2 to take into account the fact that we threw out second half of FFTX above
-    MX(1) = MX(1)/2;                        % Account for endpoint uniqueness
-    MX(length(MX)) = MX(length(MX))/2;      % We know NFFT is even
-    MX = MX/length(signal);                     % Scale the FFT so that it is not a function of the length of x.
-    MX = MX.^2;
+    MX = abs(FFTX).^2;
+    MX(2:end-1) = 2*MX(2:end-1);
+    MX = MX/sum(hanning(length(seeg)).^2);
     f = (0:NumUniquePts-1)*2*Fn/NFFT0;
     percentp = MX/sum(MX)*100;
     subplot(2, 3, 2);
@@ -155,12 +152,9 @@ try
         FFTX = fft(signal, NFFT);                    % Take FFT, padding with zeros. length(FFTX)==NFFT
         NumUniquePts = ceil((NFFT+1)/2);
         FFTX = FFTX(1:NumUniquePts);            % FFT is symmetric, throw away second half
-        MX = abs(FFTX);                         % Take magnitude of X, also equal to sqrt(FFTX.*conj(FFTX))
-        MX = MX*2;                              % Multiply by 2 to take into account the fact that we threw out second half of FFTX above
-        MX(1) = MX(1)/2;                        % Account for endpoint uniqueness
-        MX(length(MX)) = MX(length(MX))/2;      % We know NFFT is even
-        MX = MX/length(signal);                     % Scale the FFT so that it is not a function of the length of x.
-        MX = MX.^2;
+        MX = abs(FFTX).^2;
+        MX(2:end-1) = 2*MX(2:end-1);
+        MX = MX/sum(winfun.^2);
         f = (0:NumUniquePts-1)*2*Fn/NFFT;
         fmap(:, n+1) = MX(f <= 130);
         n = n+1;
